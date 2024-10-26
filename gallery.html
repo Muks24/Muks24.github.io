@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>My Gallery</title>
+  <a href="index.html" class="button" id="homeButton">Back</a>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: cursive;
+      background-image: url(homepage.jpg);
+      background-size: inherit;
+    }
+
+    .header {
+      padding: 20px;
+      text-align: center;
+      background: #0078ff;
+      color: white;
+    }
+
+    .header h1 {
+      font-size: 40px;
+    }
+
+    .button-container {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    .button {
+      background-color:#0078ff;
+      border: none;
+      color: black;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      border-radius: 5px;
+    }
+
+    .button:hover {
+      background-color: #10f4f8;
+      color: white;
+    }
+
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      padding: 20px;
+    }
+
+    .photo-grid img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      max-width: 80%;
+      max-height: 80%;
+      margin: auto;
+      position: relative;
+      overflow: auto; /* Enable scrolling for zooming */
+    }
+
+    .modal-content img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>My Gallery</h1>
+  </div>
+  <div class="header">
+    <h1>Photos</h1>
+  </div>
+  <div class="photo-grid">
+    <img src="assets/img/1.jpg" onclick="openModal('assets/img/1.jpg')">
+    <img src="assets/img/2.jpg" onclick="openModal('assets/img/2.jpg')">
+    <img src="assets/img/3.jpg" onclick="openModal('assets/img/3.jpg')">
+    <img src="assets/img/4.jpg" onclick="openModal('assets/img/4.jpg')">
+    <img src="assets/img/9.jpg" onclick="openModal('assets/img/9.jpg')">
+    <img src="assets/img/6.jpg" onclick="openModal('assets/img/6.jpg')">
+    <img src="assets/img/7.jpg" onclick="openModal('assets/img/7.jpg')">
+    <img src="assets/img/8.jpg" onclick="openModal('assets/img/8.jpg')">
+    <img src="assets/img/5.jpg" onclick="openModal('assets/img/5.jpg')">
+    <!-- Add more images as needed -->
+  </div>
+  <div id="myModal" class="modal">
+    <button class="back-button" onclick="closeModal()">&lt; Back</button>
+    <div class="modal-content">
+      <img id="modalImage" src="" alt="Modal Image">
+    </div>
+  </div>
+
+  <script>
+    function openModal(imageSrc) {
+      document.getElementById("modalImage").src = imageSrc;
+      document.getElementById("myModal").style.display = "flex";
+    }
+
+    function closeModal() {
+      document.getElementById("myModal").style.display = "none";
+    }
+  </script>
+</body>
+</html>
