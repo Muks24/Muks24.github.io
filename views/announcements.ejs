@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Announcements - Barangay Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+    <style>
+        .announcements-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        .announcement {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+
+        .announcement:last-child {
+            border-bottom: none;
+        }
+
+        .announcement h3 {
+            margin: 0;
+            color: #333;
+        }
+
+        .announcement p {
+            color: #777;
+            margin: 5px 0 0;
+        }
+
+        .create-announcement {
+            display: block;
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .create-announcement a {
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background 0.3s;
+        }
+
+        .create-announcement a:hover {
+            background: #45a049;
+        }
+    </style>
+<body>
+    <header>
+        <div class="logosec">
+            <div class="logo">Barangay Dashboard</div>
+            <img src="images/navbar.png" class="icn menuicn" id="menuicn" alt="menu-icon">
+        </div>
+        <div class="searchbar">
+            <input type="text" placeholder="Search">
+            <div class="searchbtn">
+                <img src="images/search-icon.png" class="icn srchicn" alt="search-icon">
+            </div>
+        </div>
+        <div class="message">
+            <div class="circle"></div>
+            <img src="images/notification.jpg" class="icn" alt="notifications">
+            <div class="dp">
+                <img src="images/profile-icon.png" class="dpicn" alt="profile">
+            </div>
+        </div>
+    </header>
+    <div class="main-container">
+        <div class="navcontainer">
+            <nav class="nav">
+                <div class="nav-upper-options">
+                    <div class="nav-option">
+                        <img src="images/dashboard.png" class="nav-img" alt="dashboard">
+                        <h3><a href="/dashboard">Dashboard</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/articles.png" class="nav-img" alt="announcements">
+                        <h3><a href="/announcements">Announcements</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/profile-icon.png" class="nav-img" alt="officials">
+                        <h3><a href="/officials">Officials</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/profile-icon.png" class="nav-img" alt="skofficials">
+                        <h3><a href="/sk_officials">SK Officials</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/report.png" class="nav-img" alt="reports">
+                        <h3><a href="/requests">Requests</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/report.png" class="nav-img" alt="reports">
+                        <h3><a href="/reports">Reports</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/residents.jpg" class="nav-img" alt="residents">
+                        <h3><a href="/residents">Residents</a></h3>
+                    </div>
+                        <div class="nav-option">
+                        <img src="images/profile-icon.png" class="nav-img" alt="profile">
+                        <h3><a href="/profile">Profile</a></h3>
+                    </div>                  
+                    <div class="nav-option logout">
+                        <img src="images/logout.png" class="nav-img" alt="logout">
+                        <h3><a href="/logout">Logout</a></h3>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="main">
+            <h1>Announcements</h1>
+
+            <% if (user.role === 'captain' || user.role === 'secretary') { %>
+            <div class="create-announcement">
+                <a href="/announcements/create">Create Announcement</a>
+            </div>
+            <% } %>
+
+            <div class="announcements-container">
+                <% announcements.forEach(function(announcement) { %>
+                <div class="announcements">
+                    <h3><%= announcement.title %></h3>
+                    <p><%= announcement.content %></p>
+                    <small>Posted on <%= announcement.date %></small>
+                </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Reports - Barangay Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .reports-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        .filter-container {
+            margin-bottom: 20px;
+        }
+
+        .filter-container select {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .chart-container {
+            width: 100%;
+            height: 400px;
+        }
+
+        .logs-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        .logs-container h2 {
+            color: #333;
+        }
+
+        .log-item {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+
+        .log-item:last-child {
+            border-bottom: none;
+        }
+
+        .log-item p {
+            margin: 0;
+            color: #777;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header>
+        <div class="logosec">
+            <div class="logo">Barangay Dashboard</div>
+            <img src="images/navbar.png" class="icn menuicn" id="menuicn" alt="menu-icon">
+        </div>
+        <div class="searchbar">
+            <input type="text" placeholder="Search">
+            <div class="searchbtn">
+                <img src="images/search-icon.png" class="icn srchicn" alt="search-icon">
+            </div>
+        </div>
+        <div class="message">
+            <div class="circle"></div>
+            <img src="images/notification.jpg" class="icn" alt="notifications">
+            <div class="dp">
+                <img src="images/profile-icon.png" class="dpicn" alt="profile">
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="navcontainer">
+            <nav class="nav">
+                <div class="nav-upper-options">
+                    <div class="nav-option">
+                        <img src="images/dashboard.png" class="nav-img" alt="dashboard">
+                        <h3><a href="/dashboard">Dashboard</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/articles.png" class="nav-img" alt="announcements">
+                        <h3><a href="/announcements">Announcements</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/profile-icon.png" class="nav-img" alt="officials">
+                        <h3><a href="/officials">Officials</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/profile-icon.png" class="nav-img" alt="skofficials">
+                        <h3><a href="/sk_officials">SK Officials</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/report.png" class="nav-img" alt="reports">
+                        <h3><a href="/requests">Requests</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/report.png" class="nav-img" alt="reports">
+                        <h3><a href="/reports">Reports</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/residents.jpg" class="nav-img" alt="residents">
+                        <h3><a href="/residents">Residents</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/profile-icon.png" class="nav-img" alt="profile">
+                        <h3><a href="/profile">Profile</a></h3>
+                    </div>
+                    <div class="nav-option logout">
+                        <img src="images/logout.png" class="nav-img" alt="logout">
+                        <h3><a href="/logout">Logout</a></h3>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="main">
+            <h1>Business Permit Reports</h1>
+            <div class="reports-container">
+                <div class="filter-container">
+                    <label for="businessFilter">Filter by:</label>
+                    <select id="businessFilter">
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                        <option value="per_year">Per Year</option>
+                    </select>
+                </div>
+                <div class="chart-container">
+                    <canvas id="businessPermitChart"></canvas>
+                </div>
+            </div>
+
+            <h1>Barangay Clearance Reports</h1>
+            <div class="reports-container">
+                <div class="filter-container">
+                    <label for="clearanceFilter">Filter by:</label>
+                    <select id="clearanceFilter">
+                        <option value="weekly">Weekly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                        <option value="per_year">Per Year</option>
+                    </select>
+                </div>
+                <div class="chart-container">
+                    <canvas id="barangayClearanceChart"></canvas>
+                </div>
+            </div>                      
+                        
+        </div>
+    </div>
+    
+    <script>
+        // Get Canvas Contexts
+        const ctxBusiness = document.getElementById('businessPermitChart').getContext('2d');
+        const ctxClearance = document.getElementById('barangayClearanceChart').getContext('2d');
+        let businessChart, clearanceChart;
+
+        // Function to Render Business Permit Chart
+        const renderBusinessChart = (labels, data) => {
+            if (businessChart) businessChart.destroy();
+            businessChart = new Chart(ctxBusiness, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Business Permits Issued',
+                        data: data,
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        };
+
+        // Function to Render Barangay Clearance Chart
+        const renderClearanceChart = (labels, data) => {
+            if (clearanceChart) clearanceChart.destroy();
+            clearanceChart = new Chart(ctxClearance, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Barangay Clearances Issued',
+                        data: data,
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        };
+
+        // Function to Fetch and Update Both Charts
+        const updateCharts = (filter, type, renderFunction) => {
+            fetch(`/reports/data?type=${type}&filter=${filter}`)
+                .then(response => response.json())
+                .then(data => {
+                    renderFunction(data.labels, data.values);
+                });
+        };
+
+        // Event Listeners for Filters
+        document.getElementById('businessFilter').addEventListener('change', (event) => {
+            updateCharts(event.target.value, 'business_permit', renderBusinessChart);
+        });
+
+        document.getElementById('clearanceFilter').addEventListener('change', (event) => {
+            updateCharts(event.target.value, 'barangay_clearance', renderClearanceChart);
+        });
+
+        // Initial Chart Update
+        updateCharts('monthly', 'business_permits', renderBusinessChart);
+        updateCharts('monthly', 'barangay_clearances', renderClearanceChart);
+    </script>
+
+</body>
+</html>

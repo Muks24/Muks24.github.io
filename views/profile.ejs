@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile - Barangay Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+    <style>
+        .profile-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        .profile-container h2 {
+            color: #333;
+        }
+
+        .profile-container p {
+            color: #777;
+        }
+
+        .profile-container form input[type="text"],
+        .profile-container form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .profile-container form button {
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .profile-container form button:hover {
+            background: #45a049;
+        }
+    </style>
+
+<body>
+    <header>
+        <div class="logosec">
+            <div class="logo">Barangay Dashboard</div>
+            <img src="images/navbar.png" class="icn menuicn" id="menuicn" alt="menu-icon">
+        </div>
+        <div class="searchbar">
+            <input type="text" placeholder="Search">
+            <div class="searchbtn">
+                <img src="images/search-icon.png" class="icn srchicn" alt="search-icon">
+            </div>
+        </div>
+        <div class="message">
+            <div class="circle"></div>
+            <img src="images/notification.jpg" class="icn" alt="notifications">
+            <div class="dp">
+                <img src="images/profile-icon.png" class="dpicn" alt="profile">
+            </div>
+        </div>
+    </header>
+    <div class="main-container">
+        <div class="navcontainer">
+            <nav class="nav">
+                <div class="nav-upper-options">
+                    <div class="nav-option">
+                        <img src="images/dashboard.png" class="nav-img" alt="dashboard">
+                        <h3><a href="/dashboard">Dashboard</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/articles.png" class="nav-img" alt="announcements">
+                        <h3><a href="/announcements">Announcements</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/profile-icon.png" class="nav-img" alt="officials">
+                        <h3><a href="/officials">Officials</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/profile-icon.png" class="nav-img" alt="skofficials">
+                        <h3><a href="/sk_officials">SK Officials</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/report.png" class="nav-img" alt="reports">
+                        <h3><a href="/requests">Requests</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/report.png" class="nav-img" alt="reports">
+                        <h3><a href="/reports">Reports</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/residents.jpg" class="nav-img" alt="residents">
+                        <h3><a href="/residents">Residents</a></h3>
+                    </div>                    
+                        <div class="nav-option">
+                        <img src="images/profile-icon.png" class="nav-img" alt="profile">
+                        <h3><a href="/profile">Profile</a></h3>
+                    </div>
+                    <div class="nav-option logout">
+                        <img src="images/logout.png" class="nav-img" alt="logout">
+                        <h3><a href="/logout">Logout</a></h3>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="main">
+            <div class="profile-container">
+                <h2>Profile</h2>
+                <p>Username: <%= user.username %></p>
+                <p>Role: <%= user.role %></p>
+
+                <h3>Edit Profile</h3>
+                <form action="/profile/edit" method="POST">
+                    <input type="text" name="username" value="<%= user.username %>" required>
+                    <button type="submit">Update Profile</button>
+                </form>
+
+                <h3>Change Password</h3>
+                <form action="/profile/change-password" method="POST">
+                    <input type="password" name="current_password" placeholder="Current Password" required>
+                    <input type="password" name="new_password" placeholder="New Password" required>
+                    <button type="submit">Change Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

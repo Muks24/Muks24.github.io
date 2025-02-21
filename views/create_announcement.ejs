@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Announcement - Barangay Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="stylesheet" href="css/login.css">
+    <style>
+        .create-announcement-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+            width: 80%;
+            margin: 20px auto;
+        }
+
+        .create-announcement-container h2 {
+            color: #333;
+        }
+
+        .create-announcement-container form input[type="text"],
+        .create-announcement-container form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .create-announcement-container form button {
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .create-announcement-container form button:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="main">
+            <div class="create-announcement-container">
+                <h2>Create New Announcement</h2>
+                <a href="/announcements/create">Create Announcement</a>
+                    <input type="text" name="title" placeholder="Title" required>
+                    <textarea name="content" placeholder="Announcement Content" rows="5" required></textarea>
+                    <button type="submit">Post Announcement</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

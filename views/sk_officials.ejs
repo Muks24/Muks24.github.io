@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SK Officials - Barangay Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+    <style>
+        .sk-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        .sk-container h2 {
+            color: #333;
+        }
+
+        .sk-official {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+
+        .sk-official:last-child {
+            border-bottom: none;
+        }
+
+        .sk-official h3 {
+            margin: 0;
+            color: #444;
+        }
+
+        .sk-official p {
+            color: #777;
+            margin: 5px 0 0;
+        }
+
+        .action-buttons {
+            margin-top: 10px;
+        }
+
+        .action-buttons a, .action-buttons form button {
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+            margin-right: 5px;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background-color: #4CAF50;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
+            border: none;
+        }
+
+        .add-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
+
+<body>
+    <header>
+        <div class="logosec">
+            <div class="logo">Barangay Dashboard</div>
+            <img src="images/navbar.png" class="icn menuicn" id="menuicn" alt="menu-icon">
+        </div>
+        <div class="searchbar">
+            <input type="text" placeholder="Search">
+            <div class="searchbtn">
+                <img src="images/search-icon.png" class="icn srchicn" alt="search-icon">
+            </div>
+        </div>
+        <div class="message">
+            <div class="circle"></div>
+            <img src="images/notification.jpg" class="icn" alt="notifications">
+            <div class="dp">
+                <img src="images/profile-icon.png" class="dpicn" alt="profile">
+            </div>
+        </div>
+    </header>
+    <div class="main-container">
+        <div class="navcontainer">
+            <nav class="nav">
+                <div class="nav-upper-options">
+                    <div class="nav-option">
+                        <img src="images/dashboard.png" class="nav-img" alt="dashboard">
+                        <h3><a href="/dashboard">Dashboard</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/articles.png" class="nav-img" alt="announcements">
+                        <h3><a href="/announcements">Announcements</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/profile-icon.png" class="nav-img" alt="officials">
+                        <h3><a href="/officials">Officials</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/profile-icon.png" class="nav-img" alt="skofficials">
+                        <h3><a href="/sk_officials">SK Officials</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/report.png" class="nav-img" alt="reports">
+                        <h3><a href="/requests">Requests</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/report.png" class="nav-img" alt="reports">
+                        <h3><a href="/reports">Reports</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/residents.jpg" class="nav-img" alt="residents">
+                        <h3><a href="/residents">Residents</a></h3>
+                    </div>
+                    <div class="nav-option">
+                        <img src="images/profile-icon.png" class="nav-img" alt="profile">
+                        <h3><a href="/profile">Profile</a></h3>
+                    </div>
+                    <div class="nav-option logout">
+                        <img src="images/logout.png" class="nav-img" alt="logout">
+                        <h3><a href="/logout">Logout</a></h3>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div class="main">
+            <h1>SK Officials</h1>
+            
+            <% if (user.role === 'captain') { %>
+            <a href="/sk_officials/add" class="add-btn">Add SK Official</a>
+            <% } %>
+
+            <div class="sk-container">
+                <% sk_officials.forEach(function(sk) { %>
+                <div class="sk-official">
+                    <h3><%= sk.position %>: <%= sk.name %></h3>
+                    <p>Term: <%= sk.term_start %> to <%= sk.term_end %></p>
+                    <p>Contact: <%= sk.contact %></p>
+                    
+                    <% if (user.role === 'captain', 'secretary') { %>
+                    <div class="action-buttons">
+                        <a href="/sk_officials/edit/<%= sk.id %>" class="edit-btn">Edit</a>
+                        <form action="/sk_officials/delete/<%= sk.id %>" method="POST" style="display:inline;">
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                    </div>
+                    <% } %>
+                </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pending Requests - Barangay Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <style>
+        .request-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        .request-container h2 {
+            color: #333;
+        }
+
+        .request-item {
+            border-bottom: 1px solid #eee;
+            padding: 10px 0;
+        }
+
+        .request-item:last-child {
+            border-bottom: none;
+        }
+
+        .approve-btn {
+            padding: 5px 10px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .approve-btn:hover {
+            background: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="main">
+            <div class="request-container">
+                <h2>Pending Business Permit Requests</h2>
+                <% if (businessRequests.length > 0) { %>
+                    <% businessRequests.forEach(function(request) { %>
+                    <div class="request-item">
+                        <p><strong>Purpose:</strong> <%= request.purpose %></p>
+                        <p><strong>Details:</strong> <%= request.details %></p>
+                        <p><strong>Requested By:</strong> <%= request.first_name %> <%= request.last_name %></p>
+                        <p><strong>Address:</strong> <%= request.address %></p>
+                        <p><strong>Contact:</strong> <%= request.contact %></p>
+                        <p><strong>Date:</strong> <%= new Date(request.date).toLocaleDateString() %></p>
+                        <form action="/requests/approve/business_permit/<%= request.id %>" method="POST">
+                            <button class="approve-btn" type="submit">Approve</button>
+                        </form>
+                    </div>
+                    <% }) %>
+                <% } else { %>
+                    <p>No pending business permit requests.</p>
+                <% } %>
+            </div>
+
+            <div class="request-container">
+                <h2>Pending Barangay Clearance Requests</h2>
+                <% if (clearanceRequests.length > 0) { %>
+                    <% clearanceRequests.forEach(function(request) { %>
+                    <div class="request-item">
+                        <p><strong>Purpose:</strong> <%= request.purpose %></p>
+                        <p><strong>Details:</strong> <%= request.details %></p>
+                        <p><strong>Requested By:</strong> <%= request.first_name %> <%= request.last_name %></p>
+                        <p><strong>Address:</strong> <%= request.address %></p>
+                        <p><strong>Contact:</strong> <%= request.contact %></p>
+                        <p><strong>Date:</strong> <%= new Date(request.date).toLocaleDateString() %></p>
+                        <form action="/requests/approve/barangay_clearance/<%= request.id %>" method="POST">
+                            <button class="approve-btn" type="submit">Approve</button>
+                        </form>
+                    </div>
+                    <% }) %>
+                <% } else { %>
+                    <p>No pending barangay clearance requests.</p>
+                <% } %>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
